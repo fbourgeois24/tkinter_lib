@@ -3,7 +3,6 @@ from tkinter.messagebox import * # Pour les messages popup
 from tkinter.filedialog import * # Pour la sélection d'un fichier
 from tkinter.ttk import * # Pour la création du tableau
 from tkinter import font
-from pythonLib.utilLib import get_os
 
 
 #################################################################################################################################################################################
