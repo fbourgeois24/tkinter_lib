@@ -3,6 +3,8 @@ from tkinter.messagebox import * # Pour les messages popup
 from tkinter.filedialog import * # Pour la sélection d'un fichier
 from tkinter.ttk import * # Pour la création du tableau
 from tkinter import font
+from tkcalendar import Calendar,DateEntry # Installer avec "pip install tkcalendar"
+
 
 
 #################################################################################################################################################################################
@@ -436,6 +438,22 @@ class window:
 
 		# Sélection simple ligne
 		self.tableau['selectmode'] = "browse"
+
+
+	def clear(self, object_name=None):
+		""" Vider un objet (frame, fenêtre, ...)
+			object_name est le nom de l'objet. S'il n'est pas spécifié on vide les 3 frames de la fenêtre
+		"""
+		if object_name is None:
+			for item in self.up_fix_frame.winfo_children():
+				item.destroy()
+			for item in self.scrl_frame.winfo_children():
+				item.destroy()
+			for item in self.dn_fix_frame.winfo_children():
+				item.destroy()
+		else:
+			for item in getattr(self, object_name).winfo_children():
+				item.destroy()
 	
 			
 
