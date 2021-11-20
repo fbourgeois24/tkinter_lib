@@ -1,9 +1,10 @@
+import tkinter as tk
 from tkinter import * # Pour l'interface graphique
 from tkinter.messagebox import * # Pour les messages popup
 from tkinter.filedialog import * # Pour la sélection d'un fichier
-from tkinter.ttk import * # Pour la création du tableau
+from tkinter import ttk # Pour la création du tableau
 from tkinter import font
-from tkcalendar import Calendar,DateEntry # Installer avec "pip install tkcalendar"
+# from tkcalendar import Calendar,DateEntry # Installer avec "pip install tkcalendar"
 
 
 
@@ -33,7 +34,7 @@ class window:
 	""" Classe pour la gestion des fenêtres"""
 
 
-	def __init__(self, title, size, main = False, scrollbar = False, menu = None, function = None, on_close_function=None):
+	def __init__(self, title, size, main = False, scrollbar = False, menu = None, function = None, on_close_function=None, background=None):
 		""" Constructeur qui stocke le titre et la taille de la fenêtre
 		function: fonction appelée à lé réouverture de la fenêtre (pour refresh)
 		on_close_function:  Fonction appelée à la fermeture de la fenêtre
@@ -44,7 +45,8 @@ class window:
 		self.scrollbar_activate = scrollbar
 		self.menu = menu
 		self.function = function
-		self.on_close_function = on_close_function 
+		self.on_close_function = on_close_function
+		self.background = background
 
 
 
@@ -66,7 +68,12 @@ class window:
 				self.w.title(self.title)
 			else:
 				self.w.title(title)
-			self.w.geometry(self.size)
+			if self.size == "full_screen":
+				self.window.attributes('-fullscreen', True)
+			else:
+				self.w.geometry(self.size)
+			if self.background is not None:
+				self.w.configure(bg=self.background)
 
 			if self.on_close_function is not None:	# Fonction appelée à la fermeture
 				def close_function():
@@ -132,10 +139,16 @@ class window:
 				self.canvas.bind_all("<MouseWheel>", self.onMouseWheel)
 			else:
 				self.up_fix_frame = Frame(self.w)
+				if self.background is not None:
+					self.up_fix_frame.configure(bg=self.background)
 				self.up_fix_frame.pack(fill="both")
 				self.scrl_frame = Frame(self.w)
+				if self.background is not None:
+					self.scrl_frame.configure(bg=self.background)
 				self.scrl_frame.pack(fill="both", expand="yes")
 				self.dn_fix_frame = Frame(self.w)
+				if self.background is not None:
+					self.dn_fix_frame.configure(bg=self.background)
 				self.dn_fix_frame.pack(fill="both")
 
 			if function_on_return is not None:	
@@ -324,7 +337,7 @@ class window:
 		scrollbar_X_tableau.pack(side=BOTTOM,fill=X)
 
 		# Création du tableau et définition des colonnes (le nom de la colonne = le titre de la colonne)
-		self.tableau = Treeview(self.frame_tableau, yscrollcommand=scrollbar_Y_tableau.set, xscrollcommand=scrollbar_X_tableau.set, selectmode='extended', columns=(titles))
+		self.tableau = ttk.Treeview(self.frame_tableau, yscrollcommand=scrollbar_Y_tableau.set, xscrollcommand=scrollbar_X_tableau.set, selectmode='extended', columns=(titles))
 		# Spécification des colonnes
 		for item in titles:
 			if center_items == True:
