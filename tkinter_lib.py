@@ -69,7 +69,7 @@ class window:
 			else:
 				self.w.title(title)
 			if self.size == "full_screen":
-				self.window.attributes('-fullscreen', True)
+				self.w.attributes('-fullscreen', True)
 			else:
 				self.w.geometry(self.size)
 			if self.background is not None:
